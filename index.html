@@ -10,7 +10,7 @@
   }
 
   body {
-    background: white;
+    background: black;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,6 +49,13 @@ var apple = {
   x: 320,
   y: 320
 };
+var bonus = {
+  x: 10,
+  y: 200,
+    
+  dx: grid,
+  dy: 0
+}; 
 
 // get random whole numbers in a specific range
 // @see https://stackoverflow.com/a/1527820/2124254
@@ -61,7 +68,7 @@ function loop() {
   requestAnimationFrame(loop);
 
   // slow game loop to 15 fps instead of 60 (60/15 = 4)
-  if (++count < 4) {
+  if (++count < 6) {
     return;
   }
 
@@ -74,18 +81,53 @@ function loop() {
 
   // wrap snake position horizontally on edge of screen
   if (snake.x < 0) {
-    snake.x = canvas.width - grid;
+        snake.x = 160;
+        snake.y = 160;
+        snake.cells = [];
+        snake.maxCells = 4;
+        snake.dx = grid;
+        snake.dy = 0;
+        apple.x = getRandomInt(0, 25) * grid;
+        apple.y = getRandomInt(0, 25) * grid;
+        bonus.x = width - 1;
+        bonus.y = height / 2;
+             
   }
   else if (snake.x >= canvas.width) {
-    snake.x = 0;
+    //snake.x = 0;
+        snake.x = 160;
+        snake.y = 160;
+        snake.cells = [];
+        snake.maxCells = 4;
+        snake.dx = grid;
+        snake.dy = 0;
+        apple.x = getRandomInt(0, 25) * grid;
+        apple.y = getRandomInt(0, 25) * grid;  
   }
 
   // wrap snake position vertically on edge of screen
   if (snake.y < 0) {
-    snake.y = canvas.height - grid;
+      //snake.y = canvas.height - grid;
+        snake.x = 160;
+        snake.y = 160;
+        snake.cells = [];
+        snake.maxCells = 4;
+        snake.dx = grid;
+        snake.dy = 0;
+        apple.x = getRandomInt(0, 25) * grid;
+        apple.y = getRandomInt(0, 25) * grid;
   }
   else if (snake.y >= canvas.height) {
-    snake.y = 0;
+      //snake.y = 0;
+        snake.x = 160;
+        snake.y = 160;
+        snake.cells = [];
+        snake.maxCells = 4;
+        snake.dx = grid;
+        snake.dy = 0;
+        apple.x = getRandomInt(0, 25) * grid;
+        apple.y = getRandomInt(0, 25) * grid;
+        
   }
 
   // keep track of where snake has been. front of the array is always the head
@@ -96,6 +138,12 @@ function loop() {
     snake.cells.pop();
   }
 
+  // draw bonus
+  if(snake.maxCells % 3 == 0 && snake.maxCells != 0)
+  {
+  context.fillStyle = 'blue';
+  context.fillRect(bonus.x, bonus.y, grid-1, grid-1);
+  }
   // draw apple
   context.fillStyle = 'red';
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
@@ -166,6 +214,8 @@ document.addEventListener('keydown', function(e) {
 
 // start the game
 requestAnimationFrame(loop);
+
 </script>
 </body>
 </html>
+
